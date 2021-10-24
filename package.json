@@ -1,0 +1,21 @@
+{
+  "name": "VAV2021-API_Testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/patiphan2000/VAV2021-API_Testing.git",
+  "author": "patiphan2000 <patiphan.sri@ku.th>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "private": false,
+  "devDependencies": {
+    "babel-jest": "^27.3.1",
+    "jest": "^27.3.1"
+  },
+  "dependencies": {
+    "axios": "^0.23.0",
+    "supertest": "^6.1.6"
+  }
+}
