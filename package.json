@@ -1,5 +1,10 @@
 {
   "name": "VAV2021-API_Testing",
+  "jest": {
+    "reporters": [
+      "default",
+      "jest-html-reporters"
+    ]},
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/patiphan2000/VAV2021-API_Testing.git",
@@ -16,6 +21,7 @@
   },
   "dependencies": {
     "axios": "^0.23.0",
+    "jest-html-reporters": "^2.1.6",
     "supertest": "^6.1.6"
   }
 }

@@ -8,7 +8,13 @@ describe('People information', () => {
 	 * GET all people information.
 	 */
   it('all people information', () => {
-    return request.get('/people/all').expect(200);
+    return request.get('/people/all')
+    .then((response) => {
+      expect(response.status).toBe(200)
+      expect(response.body[0]._id).toEqual(expect.any(String))
+      expect(response.body[0].date).toEqual(expect.any(String))
+      expect(response.body[0].people).toEqual(expect.any(Array))
+    })
   });
 
   /**
@@ -20,11 +26,38 @@ describe('People information', () => {
     return request.get('/people/by_date/20-10-2021')
     .then((response) => {
       expect(response.status).toBe(200)
+      // expect(response.body.id).toEqual(expect.any(String))
+      expect(response.body.date).toEqual(expect.any(String))
+      expect(response.body.people).toEqual(expect.any(Array))
     })
   });
 
   /**
 	 * Test ID: 3
+	 *
+	 * check structure of people data.
+	 */
+   it('test people information structure', () => {
+    return request.get('/people/by_date/20-10-2021')
+    .then((response) => {
+      expect(response.status).toBe(200)
+
+      const peopleData = response.body.people[0]
+      expect(peopleData.reservation_id).toEqual(expect.any(Number))
+      expect(peopleData.register_timestamp).toEqual(expect.any(String))
+      expect(peopleData.name).toEqual(expect.any(String))
+      expect(peopleData.surname).toEqual(expect.any(String))
+      expect(peopleData.birth_date).toEqual(expect.any(String))
+      expect(peopleData.citizen_id).toEqual(expect.any(String))
+      expect(peopleData.occupation).toEqual(expect.any(String))
+      expect(peopleData.address).toEqual(expect.any(String))
+      expect(peopleData.priority).toEqual(expect.any(String))
+      expect(peopleData.vac_time).toEqual(expect.any(Number))
+    })
+  });
+
+  /**
+	 * Test ID: 4
 	 *
 	 * GET people information with no date given.
 	 */
@@ -36,7 +69,7 @@ describe('People information', () => {
   });
 
   /**
-	 * Test ID: 4
+	 * Test ID: 5
 	 *
 	 * GET people information from the past that data don't exist.
 	 */
@@ -48,7 +81,7 @@ describe('People information', () => {
   });
 
   /**
-	 * Test ID: 5
+	 * Test ID: 6
 	 *
 	 * GET people information from the future that data don't exist.
 	 */
@@ -60,7 +93,7 @@ describe('People information', () => {
   });
 
   /**
-	 * Test ID: 6
+	 * Test ID: 7
 	 *
 	 * GET people information by using invalid date format.
 	 */
@@ -72,7 +105,7 @@ describe('People information', () => {
   });
 
   /**
-	 * Test ID: 7
+	 * Test ID: 8
 	 *
 	 * GET people information by using invalid date format.
 	 */
@@ -84,7 +117,7 @@ describe('People information', () => {
   });
 
   /**
-	 * Test ID: 8
+	 * Test ID: 9
 	 *
 	 * GET people information by using invalid date format.
 	 */
@@ -99,7 +132,7 @@ describe('People information', () => {
 
 describe('Retrive data from Gov', () => {
   /**
-	 * Test ID: 9
+	 * Test ID: 10
 	 *
 	 * GET people information from Gov on specific date.
 	 */
@@ -112,7 +145,7 @@ describe('Retrive data from Gov', () => {
   });
 
   /**
-	 * Test ID: 10
+	 * Test ID: 11
 	 *
 	 * GET people information from Gov with no date given.
 	 */
@@ -125,7 +158,7 @@ describe('Retrive data from Gov', () => {
   });
 
   /**
-	 * Test ID: 11
+	 * Test ID: 12
 	 *
 	 * GET people information from Gov with invalid date format.
 	 */
@@ -137,7 +170,7 @@ describe('Retrive data from Gov', () => {
   });
 
   /**
-	 * Test ID: 12
+	 * Test ID: 13
 	 *
 	 * GET people information from Gov with invalid date format.
 	 */
@@ -149,7 +182,7 @@ describe('Retrive data from Gov', () => {
   });
 
   /**
-	 * Test ID: 13
+	 * Test ID: 14
 	 *
 	 * GET people information from Gov with invalid date format.
 	 */
