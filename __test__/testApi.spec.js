@@ -23,7 +23,7 @@ describe('People information by date', () => {
 	 * GET people information by specific date.
 	 */
   it('information from specific date', async () => {
-    return await request.get('/people/by_date/29-10-2021')
+    return await request.get('/people/by_date/11-11-2021')
     .then((response) => {
       expect(response.status).toBe(200)
       // expect(response.body.id).toEqual(expect.any(String))
@@ -38,7 +38,7 @@ describe('People information by date', () => {
 	 * check structure of people data.
 	 */
    it('test people information structure', async () => {
-    return await request.get('/people/by_date/29-10-2021')
+    return await request.get('/people/by_date/11-11-2021')
     .then((response) => {
       expect(response.status).toBe(200)
 
@@ -75,7 +75,7 @@ describe('People information by date', () => {
 	 * GET people information from the past that data don't exist.
 	 */
   it('information from the middle era', async () => {
-    return await request.get('/people/by_date/29-10-1469')
+    return await request.get('/people/by_date/11-11-1469')
     .then((response) => {
       expect(response.status).toBe(204)
     })
@@ -87,7 +87,7 @@ describe('People information by date', () => {
 	 * GET people information from the future that data don't exist.
 	 */
   it('information from the future', async () => {
-    return await request.get('/people/by_date/29-10-2023')
+    return await request.get('/people/by_date/11-11-2023')
     .then((response) => {
       expect(response.status).toBe(204)
     })
@@ -99,7 +99,7 @@ describe('People information by date', () => {
 	 * GET people information by using invalid date format.
 	 */
   it('invalid date format 1', async () => {
-    return await request.get('/people/by_date/2021-10-29')
+    return await request.get('/people/by_date/2021-11-11')
     .then((response) => {
       expect(response.status).toBe(204)
     })
@@ -111,7 +111,7 @@ describe('People information by date', () => {
 	 * GET people information by using invalid date format.
 	 */
   it('invalid date format 3', async () => {
-    return await request.get('/people/by_date/29-OCT-2023')
+    return await request.get('/people/by_date/11-NOV-2023')
     .then((response) => {
       expect(response.status).toBe(204)
     })
@@ -126,7 +126,7 @@ describe('Count total people in a spacific date', () => {
 	 * GET people information by using invalid date format.
   */
   it('count total people', async () => {
-    return await request.get('/people/count/total/29-10-2021')
+    return await request.get('/people/count/total/11-11-2021')
     .then((response) => {
       expect(response.status).toBe(200)
       expect(response.body.count).toBe(2)
@@ -156,7 +156,7 @@ describe('Count avaliable walk-in people in a spacific date', () => {
 	 * GET people information by using invalid date format.
   */
   it('count total walk-in', async () => {
-    return await request.get('/people/count/walkin/29-10-2021')
+    return await request.get('/people/count/walkin/11-11-2021')
     .then((response) => {
       expect(response.status).toBe(200)
       expect(response.body.total_walkin).toBe(28)
