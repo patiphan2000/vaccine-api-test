@@ -29,4 +29,4 @@ All requests must be secure, i.e. `https`, not `http`.
     
 
 ## API Documentation
-you can read the full API Documentation at [Suchon's Site API Documentation](https://github.com/SuchonSite/Server/wiki/API)
+you can read the full API Documentation at [Suchon's Site API Documentation](https://suchonsite-server.herokuapp.com/api-docs/)

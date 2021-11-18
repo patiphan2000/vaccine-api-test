@@ -1,29 +1,29 @@
 const supertest = require('supertest')
 const request = supertest.agent('https://suchonsite-server.herokuapp.com');
 
-describe('People information', () => {
+describe('All people information', () => {
   /**
 	 * Test ID: 1
 	 *
 	 * GET all people information.
 	 */
-  it('all people information', () => {
-    return request.get('/people/all')
+  it('all people information', async () => {
+    return await request.get('/people/all')
     .then((response) => {
       expect(response.status).toBe(200)
-      expect(response.body[0]._id).toEqual(expect.any(String))
-      expect(response.body[0].date).toEqual(expect.any(String))
-      expect(response.body[0].people).toEqual(expect.any(Array))
+      expect(response.body).toEqual(expect.any(Object))
     })
   });
+})
 
+describe('People information by date', () => {
   /**
 	 * Test ID: 2
 	 *
 	 * GET people information by specific date.
 	 */
-  it('information from specific date', () => {
-    return request.get('/people/by_date/20-10-2021')
+  it('information from specific date', async () => {
+    return await request.get('/people/by_date/29-10-2021')
     .then((response) => {
       expect(response.status).toBe(200)
       // expect(response.body.id).toEqual(expect.any(String))
@@ -37,8 +37,8 @@ describe('People information', () => {
 	 *
 	 * check structure of people data.
 	 */
-   it('test people information structure', () => {
-    return request.get('/people/by_date/20-10-2021')
+   it('test people information structure', async () => {
+    return await request.get('/people/by_date/29-10-2021')
     .then((response) => {
       expect(response.status).toBe(200)
 
@@ -61,10 +61,11 @@ describe('People information', () => {
 	 *
 	 * GET people information with no date given.
 	 */
-  it('no date', () => {
-    return request.get('/people/by_date/')
+  it('no date', async () => {
+    return await request.get('/people/by_date/')
     .then((response) => {
-      expect(response.status).toBe(202)
+      expect(response.status).toBe(406)
+      expect(response.body.msg).toBe("no date param included")
     })
   });
 
@@ -73,10 +74,10 @@ describe('People information', () => {
 	 *
 	 * GET people information from the past that data don't exist.
 	 */
-  it('information from the middle era', () => {
-    return request.get('/people/by_date/20-10-1469')
+  it('information from the middle era', async () => {
+    return await request.get('/people/by_date/29-10-1469')
     .then((response) => {
-      expect(response.status).toBe(202)
+      expect(response.status).toBe(204)
     })
   });
 
@@ -85,10 +86,10 @@ describe('People information', () => {
 	 *
 	 * GET people information from the future that data don't exist.
 	 */
-  it('information from the future', () => {
-    return request.get('/people/by_date/20-10-2023')
+  it('information from the future', async () => {
+    return await request.get('/people/by_date/29-10-2023')
     .then((response) => {
-      expect(response.status).toBe(202)
+      expect(response.status).toBe(204)
     })
   });
 
@@ -97,10 +98,10 @@ describe('People information', () => {
 	 *
 	 * GET people information by using invalid date format.
 	 */
-  it('invalid date format 1', () => {
-    return request.get('/people/by_date/2021-10-20')
+  it('invalid date format 1', async () => {
+    return await request.get('/people/by_date/2021-10-29')
     .then((response) => {
-      expect(response.status).toBe(404)
+      expect(response.status).toBe(204)
     })
   });
 
@@ -109,87 +110,70 @@ describe('People information', () => {
 	 *
 	 * GET people information by using invalid date format.
 	 */
-  it('invalid date format 2', () => {
-    return request.get('/people/by_date/20/OCT/2023')
+  it('invalid date format 3', async () => {
+    return await request.get('/people/by_date/29-OCT-2023')
     .then((response) => {
-      expect(response.status).toBe(404)
+      expect(response.status).toBe(204)
     })
   });
+});
+
+describe('Count total people in a spacific date', () => {
 
   /**
 	 * Test ID: 9
 	 *
 	 * GET people information by using invalid date format.
-	 */
-  it('invalid date format 3', () => {
-    return request.get('/people/by_date/20-OCT-2023')
+  */
+  it('count total people', async () => {
+    return await request.get('/people/count/total/29-10-2021')
     .then((response) => {
-      expect(response.status).toBe(404)
+      expect(response.status).toBe(200)
+      expect(response.body.count).toBe(2)
     })
   });
-});
 
-
-describe('Retrive data from Gov', () => {
   /**
 	 * Test ID: 10
 	 *
-	 * GET people information from Gov on specific date.
-	 */
-  it('retrive data from specific date', () => {
-    return request.post('/getDataFromGov/20-10-2021')
+	 * GET people information by using invalid date format.
+  */
+   it('count total people with no date', async () => {
+    return await request.get('/people/count/total/')
     .then((response) => {
-      expect(response.status).toBe(401)
-      expect(response.body.msg).toBe('already have data in this date.')
+      expect(response.status).toBe(406)
+      expect(response.body.msg).toBe("no date param included")
     })
   });
+
+});
+
+describe('Count avaliable walk-in people in a spacific date', () => {
 
   /**
 	 * Test ID: 11
 	 *
-	 * GET people information from Gov with no date given.
-	 */
-  it('no date', () => {
-    return request.post('/getDataFromGov/')
+	 * GET people information by using invalid date format.
+  */
+  it('count total walk-in', async () => {
+    return await request.get('/people/count/walkin/29-10-2021')
     .then((response) => {
-      expect(response.status).toBe(202)
-      expect(response.body.msg).toBe('no date included.')
+      expect(response.status).toBe(200)
+      expect(response.body.total_walkin).toBe(28)
     })
   });
 
   /**
 	 * Test ID: 12
 	 *
-	 * GET people information from Gov with invalid date format.
-	 */
-  it('invalid date format 1', () => {
-    return request.post('/getDataFromGov/2021-10-20')
+	 * GET people information by using invalid date format.
+  */
+   it('count total people with no date', async () => {
+    return await request.get('/people/count/walkin/')
     .then((response) => {
-      expect(response.status).toBe(404)
+      expect(response.status).toBe(406)
+      expect(response.body.msg).toBe("no date param included")
     })
   });
 
-  /**
-	 * Test ID: 13
-	 *
-	 * GET people information from Gov with invalid date format.
-	 */
-  it('invalid date format 2', () => {
-    return request.post('/getDataFromGov/20/10/2021')
-    .then((response) => {
-      expect(response.status).toBe(404)
-    })
-  });
-
-  /**
-	 * Test ID: 14
-	 *
-	 * GET people information from Gov with invalid date format.
-	 */
-  it('invalid date format 3', () => {
-    return request.post('/getDataFromGov/20-OCT-2021')
-    .then((response) => {
-      expect(response.status).toBe(404)
-    })
-  });
 });
